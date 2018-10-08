@@ -16,12 +16,11 @@ logger.setLevel(logging.INFO)
 # Delete security group
 
 with open("new_vpc.log", "r", encoding="utf-8") as vpc_log:
-    log = vpc_log.read().strip()
-    log_line = log.split("\n")
+    log_list = vpc_log.readlines()
 
 GroupId_list = []
 
-for i in log_line:
+for i in log_list:
     j = i.split(" ")[3]  # GroupId 위치
     GroupId_list.append(j)
 
@@ -30,7 +29,7 @@ for GroupId in GroupId_list:
         response = ec2.delete_security_group(GroupId=GroupId)
         # response = ec2.delete_security_group(GroupName=GroupId+'HelloBOTO')
         print('Security Group Deleted')
-        logger.info(GroupId+" deleted")
+        logger.info(GroupId+" Deleted")
 
     except ClientError as e:
         print(e)
